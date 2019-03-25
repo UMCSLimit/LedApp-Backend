@@ -1,0 +1,24 @@
+{
+  "name": "ledapp-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UMCSLimit/LedApp-Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UMCSLimit/LedApp-Backend/issues"
+  },
+  "homepage": "https://github.com/UMCSLimit/LedApp-Backend#readme",
+  "dependencies": {
+    "dmx": "^0.2.2",
+    "express": "^4.16.4"
+  }
+}
