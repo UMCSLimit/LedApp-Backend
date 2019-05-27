@@ -13,39 +13,40 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 app.use(bodyParser.json())
-
-// var universe = dmx.addUniverse('App', 'enttec-open-usb-dmx', '/dev/ttyUSB0')
-const universe = dmx.addUniverse('demo', 'null', '');
+var universe = dmx.addUniverse('App', 'enttec-open-usb-dmx', 'COM27')
+ // var universe = dmx.addUniverse('App', 'enttec-open-usb-dmx', '/dev/ttyS')
+//const universe = dmx.addUniverse('demo', 'null', '');
 
 // app.get('/', (req, res) => {
 //     return res.send('App is working..');
 // });
 
-// app.get('/on', (req, res) => {
-//   universe.updateAll(255);
-//   return res.send('App is working..');
-// });
+app.get('/on', (req, res) => {
+  universe.updateAll(255);
+  return res.send('App is working..');
+});
 
-// app.get('/off', (req, res) => {
-//   universe.updateAll(0);
-//   return res.send('App is working..');
-// });
+app.get('/off', (req, res) => {
+  universe.updateAll(0);
+  return res.send('App is working..');
+});
 
-// const resetUniverse = dmxValues => {
-//   for(let i = 0; i < MAXDMX; i+=1) {
-//     dmxValues[i] = 0;
-//   }
-// }
+const resetUniverse = dmxValues => {
+  for(let i = 0; i < MAXDMX; i+=1) {
+    dmxValues[i] = 0;
+  }
+}
 
-// app.post('/update', (req, res) => {
-//     let dmxValues = {};
-//     let scenes = req.body['stage'];
-//     for(let i = 0; i < scenes.length; i++) {
-//       dmxValues[i + 1] = parseInt(scenes[i]);
-//     }
-//     dmx.update('demo', dmxValues);
-//     res.send('Sent to dmx');
-// })
+app.get('/update', (req, res) => {
+    let dmxValues = {};
+    // let scenes = req.body['stage'];
+    for(let i = 0; i < 200; i++) {
+      // dmxValdues[i + 1] = parseInt(scenes[i]);
+      dmxValues[i + 1] = i;
+    }
+    dmx.update('App', dmxValues);
+    res.send('Sent to dmx');
+})
 
 socket.on('listening', () => {
   let addr = socket.address();
@@ -63,7 +64,8 @@ socket.on('message', (msg, rinfo) => {
   for(let i = 0; i < scenes.length; i++) {
     dmxValues[i + 1] = scenes[i];
   }
-  dmx.update('demo', dmxValues);
+  dmx.update('App', dmxValues);
+  // console.log(dmxValues);
   // console.log(`server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
 });
 
